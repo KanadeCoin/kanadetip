@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>KanadeTip Sample</title>
+</head>
+<body>
+    <h2>サンプルサイト</h2>
+    <p>
+        テキストテキストテキスト。<br>
+        以下から寄付した場合は、運営のバウンティ報酬用アドレスにトークンが送られます。
+    </p>
+
+    <!-- 寄付ボタンを表示したい箇所にこのdivタグを貼り付ける -->
+    <!-- ここから -->
+    <div id="kanadeTip"></div>
+    <!-- ここまで -->
+
+
+    <!-- サイトの下部にこのjavascriptを貼り付ける -->
+    <!-- ここから -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/KanadeCoin/basicsdk@v0.0.3/kanade.min.js"></script>
+    <script type="text/javascript" src="src/kanadetip.min.js"></script>
+    <script>
+        KanadeTip.to = "0x3ccdb82f43eef681a39ae854be37ad1c40446f0d";
+        KanadeTip.add(1, "KanadeCoin", "0x8e5610ab5e39d26828167640ea29823fe1dd5843", 1000, "KNDC");
+        KanadeTip.messages.title = "このサイトの運営者に投げ銭する";
+        KanadeTip.messages.message = "こちらにご寄付をお願いいたします";
+        KanadeTip.messages.thanks = "ご寄付いただきありがとうございました！";
+        KanadeTip.messages.error = "投げ銭に失敗しました。ウォレットの状態をお確かめください。";
+        KanadeTip.generateViews(300);
+    </script>
+    <!-- ここまで -->
+
+
+</body>
+</html>

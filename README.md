@@ -1,1 +1,1 @@
-# kanadetip
+# KanadeTip
