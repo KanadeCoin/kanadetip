@@ -21,12 +21,14 @@
 
     <!-- サイトの下部にこのjavascriptを貼り付ける -->
     <!-- ここから -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/KanadeCoin/basicsdk@v0.0.3/kanade.min.js"></script>
     <script type="text/javascript" src="src/kanadetip.min.js"></script>
     <script>
         KanadeTip.to = "0x3ccdb82f43eef681a39ae854be37ad1c40446f0d";
         KanadeTip.add(1, "KanadeCoin", "0x8e5610ab5e39d26828167640ea29823fe1dd5843", 1000, "KNDC");
         KanadeTip.messages.title = "このサイトの運営者に投げ銭する";
+        KanadeTip.messages.mmMessage = "以下のボタンを押すとMetaMaskから簡単に投げ銭ができます";
         KanadeTip.messages.message = "こちらにご寄付をお願いいたします";
         KanadeTip.messages.thanks = "ご寄付いただきありがとうございました！";
         KanadeTip.messages.error = "投げ銭に失敗しました。ウォレットの状態をお確かめください。";

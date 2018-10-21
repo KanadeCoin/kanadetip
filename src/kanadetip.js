@@ -1,4 +1,4 @@
-// v1.0.0
+// v1.1.0
 
 var KanadeTip = {};
 
@@ -9,6 +9,7 @@ KanadeTip.hidePoweredBy = false;
 KanadeTip.messages = {};
 KanadeTip.messages.plugin = "";
 KanadeTip.messages.title = "";
+KanadeTip.messages.mmMessage = "";
 KanadeTip.messages.message = "";
 KanadeTip.messages.ethAddrTitle = "Ethereum address";
 KanadeTip.messages.thanks = "";
@@ -30,7 +31,7 @@ KanadeTip.generateViews = function(width) {
 
     var wrapper = document.createElement("div");
     wrapper.setAttribute("id", "kanadeTipWrapper");
-    wrapper.style.cssText = "margin:10px 0; padding:12px; width:300px; border:solid 2px #2d4472; border-radius:6px; width:"+width+"px; text-align:center;";
+    wrapper.style.cssText = "display:inline-block; margin:10px 0; padding:12px; width:300px; background-color:#fff; border:solid 2px #2d4472; border-radius:6px; width:"+width+"px; text-align:center; box-sizing:border-box;";
     kanadeTipElem.appendChild(wrapper);
 
     var wrapperTitle = document.createElement("div");
@@ -39,25 +40,59 @@ KanadeTip.generateViews = function(width) {
     wrapperTitle.style.cssText = "margin-bottom:8px; font-weight:bold; color:#2d4472;";
     wrapper.appendChild(wrapperTitle);
 
-    if (typeof window.web3 === 'undefined') {
-        var message = document.createElement("div");
-        message.setAttribute("id", "kanadeTipMessage");
-        message.innerHTML = KanadeTip.messages.message;
-        message.style.cssText = "margin:4px 0; width:100%; font-size:10pt; text-align:left;";
-        wrapper.appendChild(message);
+    var border = document.createElement("div");
+    border.style.cssText = "margin-bottom:8px; width:100%; height: 2px; background-color:#2d4472;";
+    wrapper.appendChild(border);
 
-        var ethaddrText = document.createElement("div");
-        ethaddrText.setAttribute("id", "kanadeTipEthAddrTitle");
-        ethaddrText.innerHTML = "Ethereum address";
-        ethaddrText.style.cssText = "margin:4px 0; width:100%; font-weight:bold; font-size:12pt; text-align:left;";
-        wrapper.appendChild(ethaddrText);
+    var message = document.createElement("div");
+    message.setAttribute("id", "kanadeTipMessage");
+    message.innerHTML = KanadeTip.messages.message;
+    message.style.cssText = "margin:4px 0; width:100%; font-weight:bold; font-size:10pt;";
+    wrapper.appendChild(message);
 
-        var ethaddrText = document.createElement("div");
-        ethaddrText.setAttribute("id", "kanadeTipEthAddr");
-        ethaddrText.innerHTML = KanadeTip.to;
-        ethaddrText.style.cssText = "margin:4px 0; padding:4px; font-weight:bold; font-size:11pt; background-color:#f0f0f0; word-wrap:break-word; white-space:normal; word-break:break-word; text-align:left;";
-        wrapper.appendChild(ethaddrText);
-    } else {
+    var ethaddrTitle = document.createElement("div");
+    ethaddrTitle.setAttribute("id", "kanadeTipEthAddrTitle");
+    ethaddrTitle.innerHTML = "Ethereum address";
+    ethaddrTitle.style.cssText = "margin:4px 0; width:100%; font-size:10pt;";
+    wrapper.appendChild(ethaddrTitle);
+
+    var qrWrapper = document.createElement("div");
+    qrWrapper.style.cssText = "width:100%; text-align:center;";
+    wrapper.appendChild(qrWrapper);
+
+    var qr = document.createElement("div");
+    qr.setAttribute("id", "kanadeTipQR");
+    qrWrapper.style.cssText = "width:200px; display:inline-block;";
+    qrWrapper.appendChild(qr);
+
+    var qrCode = new QRCode(document.getElementById("kanadeTipQR"), {
+        text  : KanadeTip.to,
+        width : 320,
+        height: 320,
+        colorDark  : "#2d4472",
+        colorLight : "#ffffff",
+    });
+
+    var qrImg = document.getElementById("kanadeTipQR").getElementsByTagName("img").item(0);
+    qrImg.style.cssText = "padding:10px; width:200px; height:200px; background-color:#fff; border:solid 10px #2d4472; box-sizing:border-box;";
+
+    var ethaddrText = document.createElement("div");
+    ethaddrText.setAttribute("id", "kanadeTipEthAddr");
+    ethaddrText.innerHTML = KanadeTip.to;
+    ethaddrText.style.cssText = "margin:2px 0; font-size:7pt; word-wrap:break-word; white-space:normal; word-break:break-word;";
+    wrapper.appendChild(ethaddrText);
+
+    if (typeof window.web3 !== 'undefined') {
+        var border = document.createElement("div");
+        border.style.cssText = "margin:16px 0 8px 0; width:100%; height: 2px; background-color:#2d4472;";
+        wrapper.appendChild(border);
+
+        var mmMessage = document.createElement("div");
+        mmMessage.setAttribute("id", "kanadeTipMMMessage");
+        mmMessage.innerHTML = KanadeTip.messages.mmMessage;
+        mmMessage.style.cssText = "margin:4px 0; width:100%; font-weight:bold; font-size:10pt;";
+        wrapper.appendChild(mmMessage);
+
         for (var i = 0; i < KanadeTip.tokens.length; i++) {
             var button = document.createElement("button");
             button.setAttribute("class", "kanadeTipButton");
@@ -74,7 +109,7 @@ KanadeTip.generateViews = function(width) {
         wrapper.appendChild(linkWrapper);
 
         var link = document.createElement("a");
-        wrapper.setAttribute("id", "kanadeTipCopyright");
+        link.setAttribute("id", "kanadeTipCopyright");
         link.setAttribute("href", "https://kanadecoin.com/");
         link.setAttribute("rel", "nofollow");
         link.setAttribute("target", "_blank");
